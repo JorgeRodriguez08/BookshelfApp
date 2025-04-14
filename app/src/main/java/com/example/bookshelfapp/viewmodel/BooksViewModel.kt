@@ -16,11 +16,7 @@ import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
 
-sealed interface BooksUiState {
-    data object Error: BooksUiState
-    data class Success(val books: String/*List<Book>*/): BooksUiState
-    data object Loading: BooksUiState
-}
+
 
 class BooksViewModel(val jazzBooksRepository: BooksRepository): ViewModel() {
 

@@ -8,10 +8,10 @@ import com.example.bookshelfapp.network.BooksApiService
 
 class BooksAppContainer : AppContainer {
 
-    private val baseUrl = "https://www.googleapis.com/books/v1/volumes?"
+    private val baseUrl = "https://www.googleapis.com/books/v1"
 
     private val retrofit = Retrofit.Builder()
-        .addConverterFactory(Json.asConverterFactory("application-json".toMediaType()))
+        .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
         .baseUrl(baseUrl)
         .build()
 
