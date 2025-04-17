@@ -17,18 +17,23 @@ import retrofit2.HttpException
 import java.io.IOException
 
 
-
 class BooksViewModel(val jazzBooksRepository: BooksRepository): ViewModel() {
 
     var booksUiState: BooksUiState by mutableStateOf(BooksUiState.Loading)
 
-    init { getBooks() }
+    init { searchBooks() }
 
-    fun getBooks() {
+    fun searchBooks() {
         viewModelScope.launch{
             booksUiState = BooksUiState.Loading
             booksUiState =
-                try { BooksUiState.Success(jazzBooksRepository.getBooks()) }
+                try {
+                    val books = jazzBooksRepository.getBooks()
+                    books.toMutableList().forEach {
+                        it.volumeInfo.imageLinks.thumbnail = it.volumeInfo.imageLinks.thumbnail.replace("http", "https")
+                    }
+                    BooksUiState.Success(books = books)
+                }
                 catch (e: IOException) { BooksUiState.Error }
                 catch (e: HttpException) { BooksUiState.Error}
         }
