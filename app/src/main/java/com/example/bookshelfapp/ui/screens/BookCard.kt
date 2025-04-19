@@ -1,10 +1,13 @@
 package com.example.bookshelfapp.ui.screens
 
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -19,18 +22,23 @@ fun BookCard(
     modifier: Modifier
 ) {
     Card(
-        modifier = Modifier.fillMaxSize(),
-        elevation = CardDefaults.cardElevation()
+        modifier = modifier,
+        elevation = CardDefaults.cardElevation(),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.background),
+        shape = RectangleShape
     ) {
         AsyncImage(
             model = ImageRequest.Builder(context = LocalContext.current)
-                .data(book.volumeInfo.imageLinks.thumbnail)
+                .data(book.volumeInfo.imageLinks?.thumbnail)
                 .crossfade(true)
                 .build(),
             contentDescription = book.volumeInfo.title,
-            contentScale = ContentScale.FillWidth,
-            error = painterResource(R.drawable.ic_connection_error),
-            placeholder = painterResource(R.drawable.ic_broken_image)
+            contentScale = ContentScale.Crop,
+            error = painterResource(R.drawable.ic_broken_image),
+            placeholder = painterResource(R.drawable.loading_img),
+            modifier = Modifier
+                .fillMaxWidth()
+                .aspectRatio(2f/3f)
         )
     }
 }

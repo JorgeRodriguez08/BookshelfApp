@@ -11,7 +11,6 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.bookshelfapp.BooksApplication
 import com.example.bookshelfapp.data.BooksRepository
-import com.example.bookshelfapp.model.Book
 import kotlinx.coroutines.launch
 import retrofit2.HttpException
 import java.io.IOException
@@ -29,10 +28,16 @@ class BooksViewModel(val jazzBooksRepository: BooksRepository): ViewModel() {
             booksUiState =
                 try {
                     val books = jazzBooksRepository.getBooks()
-                    books.toMutableList().forEach {
-                        it.volumeInfo.imageLinks.thumbnail = it.volumeInfo.imageLinks.thumbnail.replace("http", "https")
+                    val fixedBooks = books.map { book ->
+                        book.copy(
+                            volumeInfo = book.volumeInfo.copy(
+                                imageLinks = book.volumeInfo.imageLinks?.copy(
+                                    thumbnail = book.volumeInfo.imageLinks.thumbnail.replace("http","https")
+                                )
+                            )
+                        )
                     }
-                    BooksUiState.Success(books = books)
+                    BooksUiState.Success(books = fixedBooks)
                 }
                 catch (e: IOException) { BooksUiState.Error }
                 catch (e: HttpException) { BooksUiState.Error}

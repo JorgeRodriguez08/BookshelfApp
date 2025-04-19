@@ -1,6 +1,5 @@
 package com.example.bookshelfapp.viewmodel
 
-import com.example.bookshelfapp.model.Books
 import com.example.bookshelfapp.model.Book
 
 sealed interface BooksUiState {

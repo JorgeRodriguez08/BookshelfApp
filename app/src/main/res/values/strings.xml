@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">BookshelfApp</string>
+    <string name="default_title">Title not available </string>
+    <string name="default_description">Description not available</string>
+    <string name="loading_failed">Failed to load</string>
+    <string name="loading">Loading</string>
+    <string name="retry">Retry</string>
 </resources>

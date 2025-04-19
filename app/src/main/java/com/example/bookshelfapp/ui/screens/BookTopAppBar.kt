@@ -17,9 +17,10 @@ fun BookTopAppBar() {
             Text(
                 text = stringResource(R.string.app_name),
                 style = MaterialTheme.typography.headlineMedium,
-                color = MaterialTheme.colorScheme.background
             )
         },
-        colors = TopAppBarDefaults.topAppBarColors(MaterialTheme.colorScheme.primary)
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.background)
     )
 }
